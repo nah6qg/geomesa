@@ -71,8 +71,9 @@ class MergedFeatureSourceView(
     val bounds = new ReferencedEnvelope(org.locationtech.geomesa.utils.geotools.CRS_EPSG_4326)
     sources.foreach {
       case (source, filter) =>
-        if(source.getBounds(mergeFilter(query, filter)) == null){
-          bounds.expandToInclude(source.getBounds(mergeFilter(query, filter)))
+        val source_bounds = source.getBounds(mergeFilter(query, filter))
+        if(source_bounds != null){
+          bounds.expandToInclude(source_bounds)
         }
     }
     bounds
